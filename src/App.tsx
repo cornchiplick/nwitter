@@ -4,6 +4,7 @@ import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import Layout from "./components/layout";
 import LoadingScreen from "./components/loading-screen";
+import { auth } from "./firebase";
 import CreateAccount from "./routes/create-account";
 import Home from "./routes/home";
 import Login from "./routes/login";
@@ -49,7 +50,7 @@ const GlobalStyles = createGlobalStyle`
 function App() {
   const [isLoading, setLoading] = useState(true);
   const init = async () => {
-    // wait for firebase
+    await auth.authStateReady();
     setLoading(false);
   };
 
