@@ -30,42 +30,6 @@ const Wrapper = styled.div`
 export default function Timeline() {
   const [tweets, setTweet] = useState<ITweet[]>([]);
 
-  const fetchTweets = async () => {
-    const tweetsQuery = query(
-      collection(db, "tweets"),
-      orderBy("createdAt", "desc")
-    );
-    // 구 코드
-    // const snapshot = await getDocs(tweetsQuery);
-    // const tweets = snapshot.docs.map((doc) => {
-    //   const { tweet, createdAt, userId, username, photo } = doc.data();
-    //   return {
-    //     tweet,
-    //     createdAt,
-    //     userId,
-    //     username,
-    //     photo,
-    //     id: doc.id,
-    //   };
-    // });
-
-    // 신 코드
-    const unsubscribe = await onSnapshot(tweetsQuery, (snapshot) => {
-      const tweets = snapshot.docs.map((doc) => {
-        const { tweet, createdAt, userId, username, photo } = doc.data();
-        return {
-          tweet,
-          createdAt,
-          userId,
-          username,
-          photo,
-          id: doc.id,
-        };
-      });
-      setTweet(tweets);
-    });
-  };
-
   useEffect(() => {
     let unsubscribe: Unsubscribe | null = null;
     const fetchTweets = async () => {
